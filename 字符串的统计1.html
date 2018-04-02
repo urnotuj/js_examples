@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>统计第一个出现3次的字符</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var str = "abcd222abcdefrsdefaghty";
+		var myjson = {};
+		for(var i=0; i<str.length; i++){
+			if(!myjson[str.charAt(i)]){
+				myjson[str.charAt(i)] = 1;
+			}else{
+				myjson[str.charAt(i)]++;
+				if(myjson[str.charAt(i)] == 3 && ((str.charAt(i)>='a' && str.charAt(i)<= 'z')|| str.charAt(i)>='A' && str.charAt(i)<='Z')){
+					//console.log(myjson);
+					console.log("Get it" +str.charAt(i));
+					break;
+				}else{
+					console.log("continue");
+					continue;
+				}
+			}
+		}
+	</script>
+</body>
+</html>
