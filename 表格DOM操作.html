@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表格DOM操作</title>
+    <style type="text/css">
+    table {
+        border-collapse: collapse;
+    }
+    table,td,th {
+        border: 1px solid black;
+    }
+    </style>
+    <script type="text/javascript">
+    	function bind(){
+    		//为所有的a绑定一个事件处理程序
+    		var myTable = document.getElementById("jsTrolley");
+    		var myTbody = document.getElementsByTagName('tbody')[0];
+    		var a = document.getElementsByTagName('a');
+    		for(var i = 0;i<a.length;i++){
+    			a[i].onclick = foo;
+    		}
+    		function foo(e){
+    			var event = e||window.event;
+    			var target = event.target;
+    			var tr = target.parentNode.parentNode;
+    			myTable.deleteRow(tr.rowIndex);
+    			resetLastRow(myTbody);
+    		}  		
+    	}
+    	function add(items){
+    		//添加一个新的
+    		var myTable = document.getElementById("jsTrolley");
+    		var myTbody = document.getElementsByTagName('tbody')[0];
+    		//console.log(myTable);
+    		//console.log(myTbody);
+    		var newtr,newtd1,newtd2,newtd3;
+    		for(var i =0;i<items.length;i++){
+    			newtr = myTbody.insertRow();
+    			newtd1 = newtr.insertCell();
+    			newtd2 = newtr.insertCell();
+    			newtd3 = newtr.insertCell();
+    			newtd1.innerHTML = items[i].name;
+    			newtd2.innerHTML = parseFloat(items[i].price);
+    			newtd3.innerHTML = '<a href="javascript:void(0);">删除</a>';
+    		}
+    		//添加完之后要给a绑定事件处理程序
+    		bind();
+    		//要重新计算总计
+    		resetLastRow(myTbody);
+    	}
+    	function resetLastRow(tbd){
+    		//console.log(tbd.rows);//得到的是数组
+    		var tFoot = document.getElementsByTagName('tfoot');
+    		//console.log(tFoot);
+    		var count = tbd.rows.length;
+    		var sum = 0;
+    		for(let j = 0; j<count;j++){
+    			sum = sum+parseFloat(tbd.rows[j].cells[1].innerHTML);
+    		}
+    		tFoot[0].getElementsByTagName('td')[0].innerHTML = sum.toFixed(2) + '('+count+'件商品)';
+    		//console.log(count);
+    		//console.log(sum);
+    	}
+    </script>
+</head>
+<body onload="bind()">
+    <input type="button" value="添加商品" onclick="add([{name:333,price:2},{name:444,price:3}])">
+    <table id="jsTrolley">
+        <thead>
+            <tr>
+                <th>名称</th>
+                <th>价格</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>111</td>
+                <td>1.20</td>
+                <td><a href="javascript:void(0)">删除</a></td>
+            </tr>
+            <tr>
+                <td>222</td>
+                <td>2.10</td>
+                <td><a href="javascript:void(0)">删除</a></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>总计</th>
+                <td colspan="2">3.30（2件商品）</td>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+</html>

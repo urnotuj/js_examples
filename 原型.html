@@ -47,6 +47,9 @@
 			name:"GD"
 		};
 		console.log("重写了整个原型对象，失败!！ "+person2.job);
+		//原生对象的原型
+		var o = Object.getOwnPropertyNames(Array.prototype);
+		console.log(o);
 	</script>
 </body>
 </html>
