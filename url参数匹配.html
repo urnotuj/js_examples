@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<p>待匹配的字符串<span>para=123&user=111</span></p>
+	<p id="result">结果是：</p>
+	<p>在字符串上调用match()方法和RegExp的exec()方法相同，返回结果是一个数组，数组第一项是与整个模式匹配的字符串，之后的每一项保存着与正则表达式中的捕获组匹配的字符串。</p>
+	<script type="text/javascript">
+		var text = document.getElementsByTagName("span")[0].innerHTML;
+		console.log("待匹配的字符串",text);
+		function queryString(name,mytext){
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+			var matches = mytext.match(reg);
+			return matches;
+		}
+		console.log(queryString("para",text));//匹配结果为["para=123&","","123","&"]
+		document.getElementById("result").innerHTML = "结果是：" + queryString("para",text) ;
+	</script>
+</body>
+</html>
