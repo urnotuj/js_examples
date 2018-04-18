@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    .class2 {
+        color: red;
+    }
+    </style>
+</head>
+
+<body>
+    <ul id="1" class="class1">
+        <li>判断要添加或者删除的class值是不是已经在当前class属性中</li>
+        <li>添加：不在的话则拼接</li>
+        <li>删除：在的话使用正则匹配然后用空字符串代替</li>
+    </ul>
+    <button id="btn1" onclick="toggleClassTest();">添加class</button>
+    <script type="text/javascript">
+    //判断是否有对应的className
+    function hasClass(ele, cName) {
+        return ele.getAttribute("class").match(new RegExp("(^|\\s)" + cName + "(\\s|$)"));
+    }
+    //添加
+    function addClass(ele, cName) {
+        if (!this.hasClass(ele, cName)) {
+            var currentClass = ele.getAttribute("class");
+            var newClass = currentClass + " " + cName;
+            ele.setAttribute("class", newClass);
+        }
+    }
+    //删除
+    function removeClass(ele, cName) {
+        if (hasClass(ele, cName)) {
+            var currentClass = ele.getAttribute("class");
+            var reg = new RegExp("(^|\\s)" + cName + "(\\s|$)");
+            var newClass = currentClass.replace(reg, "");
+            ele.setAttribute("class", newClass);
+        }
+    }
+
+    function toggleClass(ele, cName) {
+        if (hasClass(ele, cName)) {
+            removeClass(ele, cName);
+            document.getElementById("btn1").innerHTML = "添加class";
+        } else {
+            addClass(ele, cName);
+             document.getElementById("btn1").innerHTML = "移除class";
+        }
+    }
+
+    function toggleClassTest() {
+        var ele = document.getElementsByTagName('ul')[0];
+        toggleClass(ele, "class2");
+    }
+    </script>
+</body>
+
+</html>
