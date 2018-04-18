@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>继承</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    /*
+     *原型链继承
+     */
+    function SuperType() {
+        this.property = true;
+    }
+    SuperType.prototype.getSuperValue = function() {
+        return this.property;
+    }
+
+    function SubType() {
+        this.subproperty = false;
+    }
+    SubType.prototype = new SuperType(); //原型对象是另一个类型的实例
+    SubType.prototype.getSubValue = function() {
+        return this.subproperty;
+    }
+
+    var instance = new SubType();
+    console.log(SubType.prototype.constructor === SuperType);
+    console.log(instance.constructor === SuperType);
+
+    /*
+     *组合继承（构造函数继承实例属性，原型链继承方法和原型属性）
+     */
+    function SuperType1(name){
+    	this.name = name;
+    	this.colors = ["red","blue","black"];
+    }
+    SuperType1.prototype.sayName = function(){
+    	alert(this.name);
+    };
+    function SubType1(name,age){
+    	SuperType1.call(this,name);//继承SuperType1的name属性并且传参数进去
+    	this.age = age;
+    }
+    SubType1.prototype = new SuperType1();
+    SubType1.prototype.constructor = SubType;
+    SubType1.prototype.sayAge = function(){
+    	alert(this.age);
+    };
+
+    var instance1 = new SubType1("John",12);
+    instance1.colors.push("yellow");
+    console.log(instance1.colors);
+    instance1.sayName();
+    instance1.sayAge();
+
+    var instance2 = new SubType1("Geoge",13);
+    console.log(instance2.colors);
+    instance2.sayName();
+    instance2.sayAge();  
+
+    /*
+     *原型继承
+     */  
+   /* var person = {
+    	name: "John",
+    	friends: ["Alice","Bob"]
+    };
+    var anotherPerson = Object.create(person);
+    anotherPerson.name = "Vivian";
+    anotherPerson.friends.push("Ivy");
+
+    var yetAnotherPerson = Object.create(person);
+    yetAnotherPerson.name = "Ivy";
+    anotherPerson.friends.push("Vivian");*/
+
+       function object(o){
+            function F(){}
+            F.prototype = o;
+            return new F();
+        }
+        var person = {
+    	name: "John",
+    	friends: ["Alice","Bob"]
+    };
+     var anotherPerson = object(person);
+    anotherPerson.name = "Vivian";
+    anotherPerson.friends.push("Ivy");
+
+    var yetAnotherPerson = object(person);
+    yetAnotherPerson.name = "Ivy";
+    anotherPerson.friends.push("Vivian");
+
+    console.log("person中的friends为" +person.friends);
+    console.log("anotherPerson的name为" + anotherPerson.name,"，anotherPerson的friends为" +anotherPerson.friends);
+    console.log("yetAnotherPerson的name为" + yetAnotherPerson.name,"，yetAnotherPerson的friends为" +yetAnotherPerson.friends);
+    console.log(Object.getPrototypeOf(anotherPerson));
+    console.log(anotherPerson.constructor === Object);
+
+    function Foo(name){
+    	this.name = name;
+    }
+    Foo.prototype.sayName = function(){
+    	return this.name;
+    }
+    function Bar(name,label){
+    	Foo.call(this,name);
+    	this.label = label;
+    }
+    Bar.prototype = Object.create(Foo.prototype);
+    Bar.prototype.sayLabel = function(){
+    	return this.label;
+    }
+
+    var  a =new Bar("a","obj a");
+    var b = new Foo("b");
+    console.log(a.sayName());
+    console.log(a.sayLabel());
+    console.log("Foo的name " +b.sayName());
+    console.log(Bar.prototype);
+    </script>
+</body>
+
+</html>

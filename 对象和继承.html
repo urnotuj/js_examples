@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>对象和继承</title>
+</head>
+<body>
+	<script type="text/javascript">
+		function SuperType(name,age){
+			this.name = name;
+			this.age = age;
+			this.friends = ["111","222"];
+		}
+		SuperType.prototype = {
+			sayName: function(){
+				return this.name;
+			},
+			sayAge: function(){
+				return this.age;
+			},
+			friendsInP:["aaa","bbb"]
+		};
+
+		function SubType(name,job){
+			SuperType.call(this,name);
+			this.job = job;
+		}
+		SubType.prototype = Object.create(SuperType.prototype);
+		SubType.prototype.sayJob = function(){
+			return this.job;
+		};
+
+		//一个父类的实例
+		var super1 = new SuperType("Father",100);
+		super1.friends.push("333");
+		super1.friendsInP.push("ccc");
+		//一个子类的实例
+		var sub1 = new SubType("Son","doctor");
+		var sub2 = new SubType("Son2","xxx");
+
+		console.log(Object.getPrototypeOf(SubType.prototype) === SuperType.prototype);
+		console.log("父类的实例" +super1.sayName() + super1.sayAge());
+		console.log("子类的实例1" +sub1.sayName());
+		console.log("子类的实例2" +sub2.sayName());
+		//构造函数中的属性是实例自己的
+		console.log(super1.friends);
+		console.log(sub1.friends);
+		//原型中的属性是实例共用的
+		console.log(sub2.friendsInP);
+
+		for(var p in sub2){
+			console.log(p);
+		}
+	</script>
+</body>
+</html>
