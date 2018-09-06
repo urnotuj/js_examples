@@ -15,12 +15,12 @@
 <body>
 	<button onclick="sortByAge()">按年龄排序</button>
 	<table>
-		 <thead> 
+ 		 <thead> 
 			<tr>
 			<th>姓名</th>
 			<th>年龄</th>
 		</tr>
- 		</thead>
+ 		</thead> 
 <tbody>
 			<tr>
 				<td>张三</td>
@@ -52,6 +52,7 @@
 				arr.push(tr[i]);
 			}
 			//console.log(arr);
+			//var arr = tr.cloneNode(true);
 			for(let i =0;i<arr.length;i++){
 				for(let j=i+1;j<arr.length;j++){
 					if(arr[j] === undefined){
@@ -69,6 +70,8 @@
 			for (let i = 0; i < arr.length; i++){
             	table.appendChild(arr[i]);
 	        }
+	        //table.replaceChild(arr,tr);
+
 	    }
 	</script>
 </body>

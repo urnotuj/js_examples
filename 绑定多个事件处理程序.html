@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<button id="btn1" onclick="fn1();">原生js绑定了两个点击事件</button>
+	<button id="btn2" onclick="fn1();">jQuery绑定了两个点击事件</button>
+	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+	<script type="text/javascript">
+		var btn1 = document.getElementById("btn1");
+		function fn1(){
+			alert("HTML事件处理程序");
+		}
+		btn1.onclick = function(){
+			alert("DOM0级的第一个事件处理程序");
+		};
+		btn1.onclick = function(){
+			alert("DOM0级的第二个事件处理程序");
+		};
+		btn1.addEventListener("click",function(){
+			alert("btn1的第一个DOM2级事件处理程序");
+		},false);
+		btn1.addEventListener("click",function(){
+			alert("btn1的第二个DOM2级事件处理程序");
+		},false);
+		$("#btn2").click(function(){
+			alert("btn2第一个事件处理");
+		});
+		$("#btn2").click(function(){
+			alert("btn2第二个事件处理");
+		});
+		$("#btn2").bind("click",function(){
+			alert("bind绑定的第一个事件处理程序");
+		});
+		$("#btn2").bind("click",function(){
+			alert("bind绑定的第二个事件处理程序");
+		});
+	</script>
+</body>
+</html>
